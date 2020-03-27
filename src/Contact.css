@@ -1,0 +1,17 @@
+body
+{
+    color: #f0ebeb;
+}
+
+.ContactPanel
+{
+    margin-left: 100px;
+    width: 300px;
+    width: 50%;
+    margin-top: 100px;
+    font-size: 20px;
+}
+h1
+{
+    font-size: 5vh;
+}
