@@ -11,9 +11,9 @@ class NavApp extends Component
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto" style={{marginRight: "50px"}}>
-                            <Link exact activeStyle={{ borderBottom: '1px solid #ffffff' }} className="Nav-Link" to= '/' >Strona główna</Link>
-                            <Link activeStyle={{ borderBottom: '1px solid #ffffff' }} className="Nav-Link" to="/about">O nas</Link>
-                            <Link activeStyle={{ borderBottom: '1px solid #ffffff' }} className="Nav-Link" to= '/contact'>Kontakt</Link>
+                            <Link exact activeStyle={{ borderBottom: '1px solid #ffffff' }} className="Nav-Link" to= '/Centrum-Historii-Zajezdnia-Web-Page/' >Strona główna</Link>
+                            <Link activeStyle={{ borderBottom: '1px solid #ffffff' }} className="Nav-Link" to="/Centrum-Historii-Zajezdnia-Web-Page/about">O nas</Link>
+                            <Link activeStyle={{ borderBottom: '1px solid #ffffff' }} className="Nav-Link" to= '/Centrum-Historii-Zajezdnia-Web-Page/contact'>Kontakt</Link>
                         </Nav>
                      </Navbar.Collapse>
                 </Navbar>
