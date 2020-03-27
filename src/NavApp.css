@@ -1,0 +1,17 @@
+.Nav-Link
+{
+    color: #ffffff;
+    margin-right: 12px;
+    text-decoration: none;
+}
+.Nav-Link:hover
+{
+    color: #ece3e3;
+    cursor: pointer;
+}
+.Nav-Link:link
+{
+    color: #fff;
+    line-height: 1.6rem;
+    text-decoration: none;
+}

@@ -4,6 +4,7 @@ import About from "./About";
 import Contact from "./Contact";
 import NavApp from './NavApp';
 import Loggin from './Loggin';
+import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 class App extends Component
