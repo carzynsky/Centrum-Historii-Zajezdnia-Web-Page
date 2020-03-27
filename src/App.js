@@ -14,10 +14,10 @@ class App extends Component
                 <div>
                     <NavApp />
                     <Switch>
-                        <Route path='/' exact component={Home}></Route>
-                        <Route path='/about' component={About}></Route>
-                        <Route path='/contact' component={Contact}></Route>
-                        <Route path='/loggin' component={Loggin}></Route>
+                        <Route path='/Centrum-Historii-Zajezdnia-Web-Page/' exact component={Home}></Route>
+                        <Route path='/Centrum-Historii-Zajezdnia-Web-Page/about' component={About}></Route>
+                        <Route path='/Centrum-Historii-Zajezdnia-Web-Page/contact' component={Contact}></Route>
+                        <Route path='/Centrum-Historii-Zajezdnia-Web-Page/loggin' component={Loggin}></Route>
                     </Switch>
                 </div>
             </Router>
