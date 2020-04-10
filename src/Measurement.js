@@ -30,7 +30,7 @@ class Measurement extends Component {
     console.log(mesm[0]);
     return (
         <div className="MeasurementPanel">
-            <Table dark hover borderless>
+            <Table hover borderless>
               <thead>
                 <tr>
                   <th>Temperatura</th>

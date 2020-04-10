@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import {store} from './actions/store';
-import {Provider} from 'react-redux';
 import Home from "./Home";
 import About from "./About";
 import Contact from "./Contact";
