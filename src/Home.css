@@ -27,6 +27,6 @@ h1
 .SignInButton:hover
 {
     cursor: pointer;
-    background-color: #fd8175;
-    border-color: #fd8175;
+    background-color: #fdbeb8;
+    border-color: #fdbeb8;
 }
