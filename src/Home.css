@@ -16,17 +16,24 @@ h1
 {
     font-size: 5vh;
 }
-.SignInButton
+.btn
 {
-    background-color: #dcd3d3;
-    border-color: #dcd3d3;
+    background-image: linear-gradient(to right,  #9733EE 51%, #DA22FF 100%);
+    /* background-color: #ff5353; */
     margin-top: 30px;
-    border-radius: 15px;
+    border-radius: 20px;
     width: 130px;
+    box-shadow: 0 4px 10px 0 rgba(173, 21, 255, 0.5);
+    transition: all .3s ease-in-out;
 }
-.SignInButton:hover
+.btn:hover
 {
+    transform: translateY(-5px);
+    background-position: 100% 0;
+    transition: all .3s ease-in-out;
     cursor: pointer;
-    background-color: #fdbeb8;
-    border-color: #fdbeb8;
+}
+
+.btn-hover:focus {
+    outline: none;
 }

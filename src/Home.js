@@ -11,7 +11,7 @@ class Home extends Component
         <div className="GreetingPanel">
             <h1>System do monitorowania parametrów mikroklimatu w Centrum Historii Zajezdnia.</h1>
             <Link to='/Centrum-Historii-Zajezdnia-Web-Page/login'>
-              <Button className="SignInButton" variant="light">Zaloguj</Button>
+              <Button className="btn" variant="dark">Zaloguj</Button>
             </Link>
         </div>
     );
