@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Centrum-Historii-Zajezdnia-Web-Page/precache-manifest.fd1eb1b769809f9d783aaf2ed2c0ac5f.js"
+  "/Centrum-Historii-Zajezdnia-Web-Page/precache-manifest.f5f81861efbc2b313d18a55f23f80503.js"
 );
 
 self.addEventListener('message', (event) => {
