@@ -38,13 +38,14 @@ option
 }
 .quantityAll
 {
+    max-width: 200px;
     margin-top: 30px;
     background-image: linear-gradient(to right,  rgb(151, 51, 238) 51%, rgb(218, 34, 255) 100%);
     border-radius: 2px;
     box-shadow: 2px 4px 10px 1px rgba(173, 21, 255, 0.5);
     height: 110px;
     width: 80%;
-    min-width: 130px;
+    min-width: 110px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -58,7 +59,8 @@ option
     box-shadow: 2px 4px 5px 1px rgba(235, 103, 27, 0.4);
     height: 110px;
     width: 80%;
-    min-width: 130px;
+    min-width: 110px;
+    max-width: 200px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -68,6 +70,8 @@ option
 {
     height: 110px;
     width: 100%;
+    min-width: 80px;
+    max-width: 200px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -115,9 +119,9 @@ h1
 }
 .labelHeader
 {
-    font-size: 100%;
+    font-size: 90%;
 }
 .labelBody
 {
-    font-size: 100%;
+    font-size: 90%;
 }
