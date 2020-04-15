@@ -9,14 +9,13 @@ class Login extends Component {
     this.state = {
       UserLogin: '',
       UserPassword: '',
-      Message: ''
+      Message: '',
     }
 
     this.UserLogin = this.UserLogin.bind(this);
     this.UserPassword = this.UserPassword.bind(this);
     this.login = this.login.bind(this);
     }
-
     UserLogin(event){
       this.setState({
         UserLogin: event.target.value
@@ -31,47 +30,47 @@ class Login extends Component {
 
   login(event){
     event.preventDefault();
-    try{
-      fetch('https://localhost:44340/api/login',{
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    // try{
+    //   fetch('https://localhost:44340/api/login',{
+    //   method: 'post',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
 
-        login: this.state.UserLogin,
-        password: this.state.UserPassword
-      })
-    })
-    .then((response) => response.json())
-    .then((result) => {
-      if(result.status === 'Error'){
-        this.setState({
-          Message: 'Nie udało się zalogować!'
-        })
-      }
-      else if(result.status === 'Success'){
-        this.setState({redirect: true});
-      }
-      else
-      {
-        this.setState({
-          Message: 'Nie udało się zalogować!'
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    //     login: this.state.UserLogin,
+    //     password: this.state.UserPassword
+    //   })
+    // })
+    // .then((response) => response.json())
+    // .then((result) => {
+    //   if(result.status === 'Error'){
+    //     this.setState({
+    //       Message: 'Nie udało się zalogować!'
+    //     })
+    //   }
+    //   else if(result.status === 'Success'){
+    //     this.setState({redirect: true});
+    //   }
+    //   else
+    //   {
+    //     this.setState({
+    //       Message: 'Nie udało się zalogować!'
+    //     });
+    //   }
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
 
-    }
-    catch(error){
-      console.log('error');
-      this.setState({
-        Message: 'Nie udało się zalogować!'
-      });
-    }  
+    // }
+    // catch(error){
+    //   console.log('error');
+    //   this.setState({
+    //     Message: 'Nie udało się zalogować!'
+    //   });
+    // }  
   }
 
   render() {

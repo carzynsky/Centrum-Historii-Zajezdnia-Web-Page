@@ -18,7 +18,7 @@ h1
 }
 .btn
 {
-    background-image: linear-gradient(to right,  #9733EE 51%, #DA22FF 100%);
+    background-image: linear-gradient(to right,  rgb(152, 52, 239) 51%, #DA22FF 100%);
     /* background-color: #ff5353; */
     margin-top: 30px;
     border-radius: 20px;

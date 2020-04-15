@@ -38,13 +38,13 @@ option
 }
 .quantityAll
 {
-    max-width: 200px;
-    margin-top: 30px;
+    max-width: 300px;
+    margin-top: 80px;
     background-image: linear-gradient(to right,  rgb(151, 51, 238) 51%, rgb(218, 34, 255) 100%);
     border-radius: 2px;
     box-shadow: 2px 4px 10px 1px rgba(173, 21, 255, 0.5);
     height: 110px;
-    width: 80%;
+    width: 100%;
     min-width: 110px;
     margin-left: auto;
     margin-right: auto;
@@ -54,17 +54,33 @@ option
 .currentTemperature
 {
     margin-top: 30px;
-    background-image: linear-gradient(to right, #f83600 51%, rgb(254, 140, 0) 100%);
+    background-image: linear-gradient(to right, rgb(248, 54, 0) 51%, rgb(254, 140, 0) 100%);
     border-radius: 2px;
-    box-shadow: 2px 4px 5px 1px rgba(235, 103, 27, 0.4);
-    height: 110px;
-    width: 80%;
+    box-shadow: 2px 4px 10px 1px rgba(255, 105, 18, 0.5);
+    height: 70%;
+    min-height: 100px;
+    width: 100%;
     min-width: 110px;
     max-width: 200px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    padding-top: 20px;
+    padding-top: 30px;
+}
+.currentHumidity
+{
+    margin-top:30px;
+    background-image: linear-gradient(to right, rgb(4, 93, 233) 0%, #2d76f5 74%);
+    border-radius: 2px;
+    box-shadow: 2px 4px 10px 1px rgba(29, 116, 255, 0.5);
+    height: 70%;
+    min-height: 100px;
+    width: 100%;
+    min-width: 110px;
+    max-width: 200px;
+    margin-left: 20px;
+    text-align: center;
+    padding-top: 30px;
 }
 .sourceSensor
 {
@@ -108,9 +124,11 @@ option
 {
     background-color:transparent;
     border-radius: 1px;
-    box-shadow: 10px 10px 15px 0px rgb(0,0,0,0.2);
+    box-shadow: 8px 10px 15px 2px rgb(0,0,0,0.3);
     /* min-width: 400px; */
     margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 20px;
 }
 h1
@@ -119,9 +137,10 @@ h1
 }
 .labelHeader
 {
-    font-size: 90%;
+    font-weight: bold;
+    font-size: 100%;
 }
 .labelBody
 {
-    font-size: 90%;
+    font-size: 100%;
 }
