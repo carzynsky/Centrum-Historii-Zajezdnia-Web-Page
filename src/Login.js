@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Form, Button} from 'react-bootstrap';
-import {Redirect, Link} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import './Login.css';
 
 class Login extends Component {
@@ -30,52 +30,58 @@ class Login extends Component {
 
   login(event){
     event.preventDefault();
-    // try{
-    //   fetch('https://localhost:44340/api/login',{
-    //   method: 'post',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
+    try{
+      fetch('https://localhost:44340/api/login',{
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
 
-    //     login: this.state.UserLogin,
-    //     password: this.state.UserPassword
-    //   })
-    // })
-    // .then((response) => response.json())
-    // .then((result) => {
-    //   if(result.status === 'Error'){
-    //     this.setState({
-    //       Message: 'Nie udało się zalogować!'
-    //     })
-    //   }
-    //   else if(result.status === 'Success'){
-    //     this.setState({redirect: true});
-    //   }
-    //   else
-    //   {
-    //     this.setState({
-    //       Message: 'Nie udało się zalogować!'
-    //     });
-    //   }
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
+        login: this.state.UserLogin,
+        password: this.state.UserPassword
+      })
+    })
+    .then((response) => response.json())
+    .then((result) => {
+      if(result.status === 'Error'){
+        this.setState({
+          Message: 'Nie udało się zalogować!'
+        })
+      }
+      else if(result.status === 'Success'){
+        this.setState({redirect: result.function});
+      }
+      else
+      {
+        this.setState({
+          Message: 'Nie udało się zalogować!'
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
 
-    // }
-    // catch(error){
-    //   console.log('error');
-    //   this.setState({
-    //     Message: 'Nie udało się zalogować!'
-    //   });
-    // }  
+    }
+    catch(error){
+      console.log('error');
+      this.setState({
+        Message: 'Nie udało się zalogować!'
+      });
+    }  
   }
 
   render() {
-    if (this.state.redirect){
-      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/measurement'/>
+    if (this.state.redirect === 'admin'){
+      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/adminpanel'/>
+    }
+    if (this.state.redirect === 'technician'){
+      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/technicianpanel'/>
+    }
+    if (this.state.redirect === 'employee'){
+      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/employeepanel'/>
     }
     return (
         <div className="LoginPanel">
@@ -92,14 +98,14 @@ class Login extends Component {
                 <Form.Label>Podaj hasło</Form.Label>
                 <Form.Control className="My-Input" onChange={this.UserPassword} type="password" placeholder="*****" />
               </Form.Group>
-              <Link to='/Centrum-Historii-Zajezdnia-Web-Page/measurement'>
+              {/* <Link to='/Centrum-Historii-Zajezdnia-Web-Page/measurement'> */}
                 {/* <Button  className="Login-Button" onClick={this.login} variant="primary" >
                     Zaloguj
                 </Button> */}
-                <Button  className="Login-Button" variant="primary" >
+                <Button  className="Login-Button" onClick={this.login} variant="primary" >
                     Zaloguj
                 </Button>
-              </Link>
+              {/* </Link> */}
             </Form>
          </div>
     );

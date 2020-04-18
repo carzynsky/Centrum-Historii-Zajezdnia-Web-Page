@@ -144,3 +144,24 @@ h1
 {
     font-size: 100%;
 }
+.Login-Button2
+{
+    margin-bottom: 30px;
+    border: none;
+    padding-top: 2px;
+    background-image: linear-gradient(to right,  rgb(65, 67, 69) 51%, #232526 100%);
+    box-shadow: 0 4px 10px 0 rgba(65, 67, 69,0.3);
+    width: 120px;
+    height: 35px;
+    border-radius: 45px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.Login-Button2:hover
+{
+    transform: translateY(-5px);
+    background-position: 100% 0;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}

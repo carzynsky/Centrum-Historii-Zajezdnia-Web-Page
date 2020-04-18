@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import{Container, Row, Col, Form} from 'react-bootstrap';
+import {Container, Row, Col, Form, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import {Line, Bar} from 'react-chartjs-2';
 import './Measurement.css';
 
-class Measurement extends Component {
+class AdminMainPanel extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -205,6 +206,18 @@ class Measurement extends Component {
   render() {
     return (
       <Container className="myContainer">
+        <Row>
+            <Col>
+                <h1>Panel admina</h1>
+            </Col>
+        </Row>
+        <Row>
+          <Col>
+              <Link to='/Centrum-Historii-Zajezdnia-Web-Page/login'>
+                  <Button  className="Login-Button2" variant='primary'>Wyloguj</Button>
+              </Link>
+          </Col>
+        </Row>
         <Row className='firstRow'>
           <Col xs='3'>
             <div className='currentTemperature'>
@@ -304,4 +317,4 @@ class Measurement extends Component {
   }
 }
  
-export default Measurement;
+export default AdminMainPanel;
