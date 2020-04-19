@@ -70,7 +70,7 @@ option
 .currentHumidity
 {
     margin-top:30px;
-    background-image: linear-gradient(to right, rgb(4, 93, 233) 0%, #2d76f5 74%);
+    background-image: linear-gradient(to right, rgb(4, 93, 233) 0%, rgb(45, 118, 245) 74%);
     border-radius: 2px;
     box-shadow: 2px 4px 10px 1px rgba(29, 116, 255, 0.5);
     height: 70%;

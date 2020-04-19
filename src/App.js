@@ -5,7 +5,7 @@ import Contact from "./Contact";
 import NavApp from './NavApp';
 import Login from './Login';
 import AdminMainPanel from "./AdminMainPanel";
-import EmployeePanel from "./EmployePanel";
+import EmployeePanel from "./EmployeePanel";
 import TechnicianPanel from './TechnicianPanel';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';

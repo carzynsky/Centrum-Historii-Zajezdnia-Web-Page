@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import {Container, Row, Col,  Button} from 'react-bootstrap';
+import {Container, Row, Col, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './Measurement.css';
-import MeasurementPanel from "./MeasurementPanel";
+import MeasurementPanel from './MeasurementPanel';
 
-class AdminPanel extends Component {
+class EmployeePanel extends Component {
   render() {
     return (
       <div>
         <Container className="myContainer">
         <Row>
             <Col>
-                <h1>Panel admininstratora</h1>
+                <h1>Panel pracownika</h1>
             </Col>
         </Row>
         <Row>
@@ -28,4 +28,4 @@ class AdminPanel extends Component {
   }
 }
  
-export default AdminPanel;
+export default EmployeePanel;
