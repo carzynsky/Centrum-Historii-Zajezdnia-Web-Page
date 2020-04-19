@@ -12,6 +12,8 @@ class MeasurementPanel extends Component {
           currentTemperature: '',
           currentHumidity: '',
           numberOfAllMeasurement: '',
+          numberOfMeasurmentToday: '',
+          numberOfMeasurementThisMonth: '',
           sensors: [],
           chartTemperatureData: {data: {datasets: [], labels: []}},
           chartHumidityData: {data: {datasets: [], labels: []}},
@@ -155,22 +157,28 @@ class MeasurementPanel extends Component {
   }
   async fetchingLoopFunction(){
       try{
-        const responseTemperature = await fetch('https://localhost:44340/api/measurement/averageTemperatureByMonth/' + this.state.currentSensor);
-        const responseHumidity = await fetch('https://localhost:44340/api/measurement/averageHumidityByMonth/' + this.state.currentSensor);
-        const responseCurrent = await fetch('https://localhost:44340/api/measurement');
+        const responseTemperature = await fetch('https://localhost:44340/api/measurement/'+ this.state.currentSensor + '/averageTemperatureByMonth');
+        const responseHumidity = await fetch('https://localhost:44340/api/measurement/'+ this.state.currentSensor + '/averageHumidityByMonth');
+        const responseCurrent = await fetch('https://localhost:44340/api/measurement/' + this.state.currentSensor);
         const responseSensors = await fetch('https://localhost:44340/api/sensors');
-        const responseNumberOfAllMeasurement = await fetch('https://localhost:44340/api/measurement/numberOfAllMeasurement');
+        const responseNumberOfAllMeasurement = await fetch('https://localhost:44340/api/measurement/' + this.state.currentSensor + '/numberOfAllMeasurement');
+        const responseNumberOfMeasurementThisMonth = await fetch('https://localhost:44340/api/measurement/' + this.state.currentSensor + '/numberOfMeasurementThisMonth');
+        const responseNumberOfMeasurementToday = await fetch('https://localhost:44340/api/measurement/' + this.state.currentSensor + '/numberOfMeasurementToday');
 
         const dataTemperature = await responseTemperature.json();
         const dataHumidity = await responseHumidity.json();
         const dataCurrent = await responseCurrent.json();
         const dataSensors = await responseSensors.json();
         const dataNumberOfAllMeasurement = await responseNumberOfAllMeasurement.json();
+        const dataNumberOfMeasurementThisMonth = await responseNumberOfMeasurementThisMonth.json();
+        const dataNumberOfMeasurementToday = await responseNumberOfMeasurementToday.json();
 
         this.setState({
           currentTemperature: dataCurrent[dataCurrent.length-1].temperature,
           currentHumidity: dataCurrent[dataCurrent.length-1].humidity,
           numberOfAllMeasurement: dataNumberOfAllMeasurement,
+          numberOfMeasurementThisMonth: dataNumberOfMeasurementThisMonth,
+          numberOfMeasurmentToday: dataNumberOfMeasurementToday,
           sensors: dataSensors.map((s) => {
             return {value: s.id, display: s.sensorName}
           })
@@ -277,7 +285,7 @@ class MeasurementPanel extends Component {
               <Form>
                 <Form.Group>
                   <Form.Label className='labelHeader'>Pomiary w tym miesiącu:</Form.Label>
-                  <Form.Text className="labelBody">25</Form.Text>
+                  <Form.Text className="labelBody">{this.state.numberOfMeasurementThisMonth}</Form.Text>
                 </Form.Group>
               </Form>
             </div>
@@ -287,7 +295,7 @@ class MeasurementPanel extends Component {
               <Form>
                 <Form.Group>
                   <Form.Label className='labelHeader'>Pomiary dzisiaj:</Form.Label>
-                  <Form.Text className="labelBody">4</Form.Text>
+                  <Form.Text className="labelBody">{this.state.numberOfMeasurmentToday}</Form.Text>
                 </Form.Group>
               </Form>
             </div>

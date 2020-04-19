@@ -11,7 +11,7 @@ class AdminPanel extends Component {
         <Container className="myContainer">
         <Row>
             <Col>
-                <h1>Panel admininstratora</h1>
+                <h1>Panel administratora</h1>
             </Col>
         </Row>
         <Row>
