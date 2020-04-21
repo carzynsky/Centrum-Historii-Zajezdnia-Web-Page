@@ -31,7 +31,7 @@ class Login extends Component {
   login(event){
     event.preventDefault();
     try{
-      fetch('https://localhost:44340/api/users',{
+      fetch('https://localhost:44340/api/users/login',{
       method: 'post',
       headers: {
         'Accept': 'application/json',
