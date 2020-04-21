@@ -1,7 +1,8 @@
 body {
     /* background-image: linear-gradient(to right,rgb(250,49,75), rgb(46,22,56)); */ 
     /* background-image: linear-gradient(to right, #FF416C, #ff4b2b); */
-    background: linear-gradient(to right, rgb(22, 21, 21),rgb(15, 15, 15));
+    background: linear-gradient(to right, rgb(22, 21, 22),rgb(15, 15, 15));   
     padding: 20px;
     margin: 0;
 }
+

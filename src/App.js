@@ -15,18 +15,17 @@ class App extends Component
     render(){
         return(
                 <Router>
-                    <div>
                         <NavApp />
                         <Switch>
                             <Route path='/Centrum-Historii-Zajezdnia-Web-Page/' exact component={Home}></Route>
                             <Route path='/Centrum-Historii-Zajezdnia-Web-Page/about' component={About}></Route>
                             <Route path='/Centrum-Historii-Zajezdnia-Web-Page/contact' component={Contact}></Route>
                             <Route path='/Centrum-Historii-Zajezdnia-Web-Page/login' component={Login}></Route>
-                            <Route path='/Centrum-Historii-Zajezdnia-Web-Page/adminpanel' component={AdminMainPanel}></Route>
+                            <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel' component={AdminMainPanel}></Route>
                             <Route path='/Centrum-Historii-Zajezdnia-Web-Page/employeepanel' component={EmployeePanel}></Route>
                             <Route path='/Centrum-Historii-Zajezdnia-Web-Page/technicianpanel' component={TechnicianPanel}></Route>
                         </Switch>
-                    </div>
+                        
                 </Router>
           );
     }

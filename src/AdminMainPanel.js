@@ -1,28 +1,36 @@
 import React, { Component } from "react";
-import {Container, Row, Col,  Button} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Container, Row, Col} from 'react-bootstrap';
 import './Measurement.css';
 import MeasurementPanel from "./MeasurementPanel";
+import UsersManagement from './UsersManagement';
+import Server from './Server';
+import NavAdmin from './NavAdmin';
 
 class AdminPanel extends Component {
   render() {
     return (
       <div>
+      <Router>
         <Container className="myContainer">
-        <Row>
+          <Row>
+              <Col>
+                  <h1>Panel administratora</h1>
+              </Col>
+          </Row>
+          <Row>
             <Col>
-                <h1>Panel administratora</h1>
-            </Col>
-        </Row>
-        <Row>
-          <Col>
-              <Link to='/Centrum-Historii-Zajezdnia-Web-Page/login'>
-                  <Button  className="Login-Button2" variant='primary'>Wyloguj</Button>
-              </Link>
-          </Col>
-        </Row>
-      </Container>
-      <MeasurementPanel/>
+              <NavAdmin />
+            </Col >
+          </Row>
+        </Container>
+        <Switch>
+          <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel' exact component={MeasurementPanel}></Route>
+          <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/users-management' component={UsersManagement}></Route>
+          <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/server' component={Server}></Route>
+        </Switch>
+                        
+      </Router>
       </div>
     );
   }

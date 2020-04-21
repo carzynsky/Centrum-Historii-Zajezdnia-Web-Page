@@ -192,7 +192,7 @@ class MeasurementPanel extends Component {
       }
   }
   
-  async componentDidMount(){
+  componentDidMount(){
       this.fetchingLoopFunction();
       setInterval( () => {
         this.fetchingLoopFunction()

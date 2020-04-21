@@ -31,7 +31,7 @@ class Login extends Component {
   login(event){
     event.preventDefault();
     try{
-      fetch('https://localhost:44340/api/login',{
+      fetch('https://localhost:44340/api/users',{
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -75,7 +75,7 @@ class Login extends Component {
 
   render() {
     if (this.state.redirect === 'admin'){
-      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/adminpanel'/>
+      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel'/>
     }
     if (this.state.redirect === 'technician'){
       return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/technicianpanel'/>

@@ -1,0 +1,49 @@
+.btnEdit
+{
+    margin-top: 0px;
+    border: none;
+    padding-top: 2px;
+    background-image: linear-gradient(to right,  rgb(65, 67, 69) 51%, #232526 100%);
+    box-shadow: 0 4px 10px 0 rgba(65, 67, 69,0.3);
+    width: 80px;
+    height: 30px;
+    border-radius: 45px;
+    font-size: 13px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.btnEdit:hover
+{
+    transform: translateY(-5px);
+    background-position: 100% 0;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+.btnDelete
+{
+
+    margin-top: 0px;
+    border: none;
+    padding-top: 2px;
+    background-image: linear-gradient(to right,  rgb(65, 67, 69) 51%, #232526 100%);
+    box-shadow: 0 4px 10px 0 rgba(65, 67, 69,0.3);
+    width: 80px;
+    height: 33px;
+    border-radius: 45px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.btnDelete:hover
+{
+    transform: translateY(-5px);
+    background-position: 100% 0;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.myModal
+{
+    color: black;
+}
