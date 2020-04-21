@@ -83,6 +83,9 @@ UserFunctionId(event){
         'Accept': 'application/json'
       }
     })
+    .then(response => {
+      this.getFetch();
+    })
   }
   putFetch()
   {
@@ -98,6 +101,9 @@ UserFunctionId(event){
         password: this.state.editUserData.password,
         userFunctionId: this.state.editUserData.userFunctionId
       })
+    })
+    .then(response => {
+      this.getFetch();
     })
 }
   render() {
@@ -129,7 +135,6 @@ UserFunctionId(event){
                   <td>{u.userFunction.function}</td>
                   <td>
                     <Button className="btnEdit" variant="dark" onClick={this.editUser.bind(this, u.id, u.login, u.password, u.userFunctionId, u.userFunction.function)}>Edytuj</Button>
-                    {/* <Button className="btnEdit" variant="dark" onClick={this.handleShow}>Edytuj</Button> */}
                     <Button className="btnDelete" variant="dark" onClick={this.deleteFetch.bind(this, u.id)}>Usuń</Button>
                   </td>
                 </tr>
