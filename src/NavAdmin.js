@@ -13,6 +13,7 @@ class NavAdmin extends Component
                             <NavLink exact activeStyle={{ borderBottom: '2px solid rgb(152, 52, 239)' }} className="Nav-Link" to= '/Centrum-Historii-Zajezdnia-Web-Page/admin-panel' >Pomiary</NavLink>
                             <NavLink activeStyle={{ borderBottom: '2px solid rgb(152, 52, 239)' }} className="Nav-Link" to="/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/users-management">Zarządzaj</NavLink>
                             <NavLink activeStyle={{ borderBottom: '2px solid rgb(152, 52, 239)' }} className="Nav-Link" to= '/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/server'>Serwer</NavLink>
+                            <NavLink activeStyle={{ borderBottom: '2px solid rgb(152, 52, 239)' }} className="Nav-Link" to= '/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/sensors'>Czujniki</NavLink>
                         </Nav>
                 </Navbar>
                 </div>

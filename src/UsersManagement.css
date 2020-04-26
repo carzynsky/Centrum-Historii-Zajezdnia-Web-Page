@@ -24,6 +24,7 @@
 {
 
     margin-top: 0px;
+    margin-right: 10px;
     border: none;
     padding-top: 2px;
     background-image: linear-gradient(to right,  rgb(65, 67, 69) 51%, #232526 100%);
@@ -46,4 +47,14 @@
 .myModal
 {
     color: black;
+}
+.historyModal
+{
+    color: black;
+}
+
+.createSelect
+{
+    width: 150px;
+    height: 35px;
 }

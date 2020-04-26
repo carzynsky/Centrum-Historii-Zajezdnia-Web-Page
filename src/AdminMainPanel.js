@@ -6,6 +6,7 @@ import MeasurementPanel from "./MeasurementPanel";
 import UsersManagement from './UsersManagement';
 import Server from './Server';
 import NavAdmin from './NavAdmin';
+import Sensors from './Sensors';
 
 class AdminPanel extends Component {
   render() {
@@ -28,6 +29,7 @@ class AdminPanel extends Component {
           <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel' exact component={MeasurementPanel}></Route>
           <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/users-management' component={UsersManagement}></Route>
           <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/server' component={Server}></Route>
+          <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/sensors' component={Sensors}></Route>
         </Switch>
                         
       </Router>

@@ -157,13 +157,13 @@ class MeasurementPanel extends Component {
   }
   async fetchingLoopFunction(){
       try{
-        const responseTemperature = await fetch('https://localhost:44340/api/measurement/'+ this.state.currentSensor + '/averageTemperatureByMonth');
-        const responseHumidity = await fetch('https://localhost:44340/api/measurement/'+ this.state.currentSensor + '/averageHumidityByMonth');
-        const responseCurrent = await fetch('https://localhost:44340/api/measurement/' + this.state.currentSensor);
-        const responseSensors = await fetch('https://localhost:44340/api/sensors');
-        const responseNumberOfAllMeasurement = await fetch('https://localhost:44340/api/measurement/' + this.state.currentSensor + '/numberOfAllMeasurement');
-        const responseNumberOfMeasurementThisMonth = await fetch('https://localhost:44340/api/measurement/' + this.state.currentSensor + '/numberOfMeasurementThisMonth');
-        const responseNumberOfMeasurementToday = await fetch('https://localhost:44340/api/measurement/' + this.state.currentSensor + '/numberOfMeasurementToday');
+        const responseTemperature = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageTemperatureByMonth');
+        const responseHumidity = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageHumidityByMonth');
+        const responseCurrent = await fetch('https://localhost:5001/api/measurement/' + this.state.currentSensor);
+        const responseSensors = await fetch('https://localhost:5001/api/sensors');
+        const responseNumberOfAllMeasurement = await fetch('https://localhost:5001/api/measurement/' + this.state.currentSensor + '/numberOfAllMeasurement');
+        const responseNumberOfMeasurementThisMonth = await fetch('https://localhost:5001/api/measurement/' + this.state.currentSensor + '/numberOfMeasurementThisMonth');
+        const responseNumberOfMeasurementToday = await fetch('https://localhost:5001/api/measurement/' + this.state.currentSensor + '/numberOfMeasurementToday');
 
         const dataTemperature = await responseTemperature.json();
         const dataHumidity = await responseHumidity.json();

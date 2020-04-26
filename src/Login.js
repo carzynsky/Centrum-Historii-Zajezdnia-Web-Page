@@ -31,7 +31,7 @@ class Login extends Component {
   login(event){
     event.preventDefault();
     try{
-      fetch('https://localhost:44340/api/users/login',{
+      fetch('https://localhost:5001/api/users/login',{
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -45,6 +45,7 @@ class Login extends Component {
     })
     .then((response) => response.json())
     .then((result) => {
+      console.log(result);
       if(result.status === 'Error'){
         this.setState({
           Message: 'Nie udało się zalogować!'
