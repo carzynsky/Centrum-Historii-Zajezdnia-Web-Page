@@ -52,6 +52,7 @@ class Login extends Component {
         })
       }
       else if(result.status === 'Success'){
+        console.log(result.function)
         this.setState({redirect: result.function});
       }
       else
@@ -99,14 +100,9 @@ class Login extends Component {
                 <Form.Label>Podaj hasło</Form.Label>
                 <Form.Control className="My-Input" onChange={this.UserPassword} type="password" placeholder="*****" />
               </Form.Group>
-              {/* <Link to='/Centrum-Historii-Zajezdnia-Web-Page/measurement'> */}
-                {/* <Button  className="Login-Button" onClick={this.login} variant="primary" >
-                    Zaloguj
-                </Button> */}
                 <Button  className="Login-Button" onClick={this.login} variant="primary" >
                     Zaloguj
                 </Button>
-              {/* </Link> */}
             </Form>
          </div>
     );

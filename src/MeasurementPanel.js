@@ -7,12 +7,17 @@ class MeasurementPanel extends Component {
     constructor(props){
         super(props);
         this.state = {
-          currentSensorName: 'Główna hala',
+          timePeriods: [{value: 0, display: 'Ostatnie 7 dni', request: 'LastWeek'}, {value: 1, display:'Aktualny rok', request: 'ByMonth'}, {value: 2, display: 'Ostatnie 5 lat', request: 'LastYears'}],
+          selectedPeriod: '1',
+          selectedPeriodName: 'ByMonth',
+          currentSensorName: '',
           currentSensor: '1',
           currentTemperature: '',
           currentHumidity: '',
+          currentTemperatureStatus: '',
+          currentHumidityStatus: '',
           numberOfAllMeasurement: '',
-          numberOfMeasurmentToday: '',
+          numberOfMeasurementToday: '',
           numberOfMeasurementThisMonth: '',
           sensors: [],
           chartTemperatureData: {data: {datasets: [], labels: []}},
@@ -87,6 +92,7 @@ class MeasurementPanel extends Component {
           }
         }
         this.currentSensor = this.currentSensor.bind(this);
+        this.setTimePeriod = this.setTimePeriod.bind(this);
       }
 
   currentSensor(event){
@@ -99,19 +105,18 @@ class MeasurementPanel extends Component {
     this.fetchingLoopFunction();
   }
 
-  setCurrentHumidity(){
-    this.setState({
-      currentHumidity: 35
-    })
+  setTimePeriod(event){
+    this.state.selectedPeriod = event.target.value;
+    this.state.selectedPeriodName = this.state.timePeriods[event.target.value].request;
+    this.fetchingLoopFunction();
   }
 
-  setChartData(dataTemperature, dataHumidity){
+  setChartData(dataTemperature, dataHumidity, newLabels, title){
     this.setState({chartTemperatureData: {
-      labels: ['Styczeń', 'Luty', 'Marzec', 'Kwiecien', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpien', 'Wrzesien',
-      'Pażdziernik', 'Listopad', 'Grudzień'],
+      labels: newLabels,
       datasets: [
         {
-          label: 'Średnia temperatura w danym miesiącu dla czujnika: ' + this.state.currentSensorName,
+          label: 'Średnia temperatura ' + title + ' dla czujnika: ' + this.state.currentSensorName,
           data: dataTemperature.map((mes) => {
             return mes.toFixed(2);
           }),
@@ -135,11 +140,10 @@ class MeasurementPanel extends Component {
       ],
     },
     chartHumidityData: {
-      labels: ['Styczeń', 'Luty', 'Marzec', 'Kwiecien', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpien', 'Wrzesien',
-        'Pażdziernik', 'Listopad', 'Grudzień'],
+      labels: newLabels,
         datasets: [
           {
-            label: 'Średnia wilgotność powietrza w danym miesiącu dla czujnika: ' + this.state.currentSensorName,
+            label: 'Średnia wilgotność powietrza ' + title +  ' dla czujnika ' + this.state.currentSensorName,
             data: dataHumidity.map((mes) => {
               return mes.toFixed(2);
             }),
@@ -157,8 +161,8 @@ class MeasurementPanel extends Component {
   }
   async fetchingLoopFunction(){
       try{
-        const responseTemperature = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageTemperatureByMonth');
-        const responseHumidity = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageHumidityByMonth');
+        const responseTemperature = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageTemperature' + this.state.selectedPeriodName);
+        const responseHumidity = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageHumidity' + this.state.selectedPeriodName);
         const responseCurrent = await fetch('https://localhost:5001/api/measurement/' + this.state.currentSensor);
         const responseSensors = await fetch('https://localhost:5001/api/sensors');
         const responseNumberOfAllMeasurement = await fetch('https://localhost:5001/api/measurement/' + this.state.currentSensor + '/numberOfAllMeasurement');
@@ -178,13 +182,76 @@ class MeasurementPanel extends Component {
           currentHumidity: dataCurrent[dataCurrent.length-1].humidity,
           numberOfAllMeasurement: dataNumberOfAllMeasurement,
           numberOfMeasurementThisMonth: dataNumberOfMeasurementThisMonth,
-          numberOfMeasurmentToday: dataNumberOfMeasurementToday,
+          numberOfMeasurementToday: dataNumberOfMeasurementToday,
           sensors: dataSensors.map((s) => {
             return {value: s.id, display: s.sensorName}
-          })
+          }),
+          currentSensorName: dataSensors[0].sensorName
         });
 
-        this.setChartData(dataTemperature, dataHumidity);
+        var tmpDate = new Date();
+        var newLabels = [];
+        var title = '';
+
+        switch(this.state.selectedPeriod){
+          case '0': {
+            tmpDate.setDate(tmpDate.getDate()-7);
+            for(var i=0; i<8; i++){
+              newLabels.push(tmpDate.getDate() + '.' + (tmpDate.getMonth()+1));
+              tmpDate.setDate(tmpDate.getDate() + 1);
+            }
+            title = 'w ciągu ostatnich 7 dni';
+            break;
+          }
+          case '1':{
+            newLabels = ['Styczeń', 'Luty', 'Marzec', 'Kwiecien', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień',
+            'Pażdziernik', 'Listopad', 'Grudzień'];
+            title = 'w danym miesiącu tego roku';
+            break;
+          }
+          case '2':{
+            newLabels = [tmpDate.getFullYear()-4, tmpDate.getFullYear()-3, tmpDate.getFullYear()-2, tmpDate.getFullYear()-1, tmpDate.getFullYear()];
+            title = 'w ciągu ostatnich 5 lat';
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+
+        if(this.state.currentTemperature > 24){
+          this.setState({
+            currentTemperatureStatus: 'Uwaga! Zbyt wysoka temperatura!'
+          })
+        }
+        else if(this.state.currentTemperature < 18){
+          this.setState({
+            currentTemperatureStatus: 'Uwaga! Zbyt niska temperatura!'
+          })
+        }
+        else{
+          this.setState({
+            currentTemperatureStatus: ''
+          })
+        }
+
+        if(this.state.currentHumidity > 60){
+          this.setState({
+            currentHumidityStatus: 'Uwaga! Zbyt wysoka wilgotność powietrza!'
+          })
+        }
+        else if(this.state.currentHumidity < 40){
+          this.setState({
+            currentHumidityStatus: 'Uwaga! Zbyt niska wilgotność powietrza!'
+          })
+        }
+        else{
+          this.setState({
+            currentHumidityStatus: ''
+          })
+        }
+
+        this.setChartData(dataTemperature, dataHumidity, newLabels, title);
 
       }
       catch(error){
@@ -227,21 +294,55 @@ class MeasurementPanel extends Component {
           <Col xs='2'>
           </Col>
           <Col xs='4'>
-            <div className='sourceSensor'>
-              <Form>
-                <Form.Group>
-                  <Form.Label className='labelHeader'>Czujnik:</Form.Label>
-                    <select className='selectSensor'
-                    value={this.state.currentSensor}
-                    onChange={this.currentSensor}
-                    >
-                      {this.state.sensors.map((s) => 
-                      <option key={s.value} value={s.value}>
-                        {s.display}
-                        </option>)}
-                    </select>
-                </Form.Group>
-              </Form>
+            <Row>
+              <div className='sourceSensor'>
+                <Form>
+                  <Form.Group>
+                    <Form.Label className='labelHeader'>Czujnik:</Form.Label>
+                      <select className='selectSensor'
+                      value={this.state.currentSensor}
+                      onChange={this.currentSensor}
+                      >
+                        {this.state.sensors.map((s) => 
+                        <option key={s.value} value={s.value}>
+                          {s.display}
+                          </option>)}
+                      </select>
+                  </Form.Group>
+                </Form>
+              </div>
+            </Row>
+            <Row>
+              <div className='sourceSensor'>
+                <Form>
+                  <Form.Group>
+                    <Form.Label className='labelHeader'>Okres:</Form.Label>
+                      <select className='selectSensor'
+                      value={this.state.selectedPeriod}
+                      onChange={this.setTimePeriod}
+                      >
+                        {this.state.timePeriods.map((t) => 
+                        <option key={t.value} value={t.value}>
+                          {t.display}
+                          </option>)}
+                      </select>
+                  </Form.Group>
+                </Form>
+              </div>
+            </Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs='12'>
+            <div className='currentTemperatureStatus'>
+              {this.state.currentTemperatureStatus}
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs='12'>
+            <div className='currentHumidityStatus'>
+              {this.state.currentHumidityStatus}
             </div>
           </Col>
         </Row>
@@ -295,7 +396,7 @@ class MeasurementPanel extends Component {
               <Form>
                 <Form.Group>
                   <Form.Label className='labelHeader'>Pomiary dzisiaj:</Form.Label>
-                  <Form.Text className="labelBody">{this.state.numberOfMeasurmentToday}</Form.Text>
+                  <Form.Text className="labelBody">{this.state.numberOfMeasurementToday}</Form.Text>
                 </Form.Group>
               </Form>
             </div>
