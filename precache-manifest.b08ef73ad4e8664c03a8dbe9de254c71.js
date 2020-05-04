@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5a5a8cf8f1eb79a6fca749a28b4511c4",
+    "revision": "867a405bfe314de2effb35e55c256ae0",
     "url": "/Centrum-Historii-Zajezdnia-Web-Page/index.html"
   },
   {
-    "revision": "b926333f884786863502",
+    "revision": "ee0598e62cc2279499be",
     "url": "/Centrum-Historii-Zajezdnia-Web-Page/static/css/2.de424728.chunk.css"
   },
   {
-    "revision": "c4e62194d6a3d2fe07fc",
-    "url": "/Centrum-Historii-Zajezdnia-Web-Page/static/css/main.50fc8442.chunk.css"
+    "revision": "12850bbc3dff1bdaf2a5",
+    "url": "/Centrum-Historii-Zajezdnia-Web-Page/static/css/main.18a7b74b.chunk.css"
   },
   {
-    "revision": "b926333f884786863502",
-    "url": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/2.41986f00.chunk.js"
+    "revision": "ee0598e62cc2279499be",
+    "url": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/2.997b1232.chunk.js"
   },
   {
     "revision": "eaaf63558baae456918a991a401208d7",
-    "url": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/2.41986f00.chunk.js.LICENSE.txt"
+    "url": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/2.997b1232.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "c4e62194d6a3d2fe07fc",
-    "url": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/main.f260bdee.chunk.js"
+    "revision": "12850bbc3dff1bdaf2a5",
+    "url": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/main.4216705d.chunk.js"
   },
   {
     "revision": "b4312900027574b41e72",
