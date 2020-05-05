@@ -11,7 +11,7 @@ class NavTechnician extends Component
                 <div className="header">
                 <Navbar expand ="lg" variant="dark" style={{marginTop: "30px"}}>
                         <Nav className="mr-auto">
-                            <NavLink exact activeStyle={{ borderBottom: '2px solid rgb(152, 52, 239)' }} className="Nav-Link" to="/Centrum-Historii-Zajezdnia-Web-Page/technician-panel">Generowanie</NavLink>
+                            <NavLink exact activeStyle={{ borderBottom: '2px solid rgb(152, 52, 239)' }} className="Nav-Link" to="/Centrum-Historii-Zajezdnia-Web-Page/technician-panel">Dodawanie czujnika</NavLink>
                             <NavLink activeStyle={{ borderBottom: '2px solid rgb(152, 52, 239)' }} className="Nav-Link" to= '/Centrum-Historii-Zajezdnia-Web-Page/technician-panel/sensors' >Czujniki</NavLink>
                         </Nav>
                 </Navbar>
