@@ -80,10 +80,10 @@ class Login extends Component {
       return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel'/>
     }
     if (this.state.redirect === 'technician'){
-      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/technicianpanel'/>
+      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/technician-panel'/>
     }
     if (this.state.redirect === 'employee'){
-      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/employeepanel'/>
+      return <Redirect push to='/Centrum-Historii-Zajezdnia-Web-Page/employee-panel'/>
     }
     return (
         <div className="LoginPanel">

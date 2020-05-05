@@ -22,10 +22,9 @@ class App extends Component
                             <Route path='/Centrum-Historii-Zajezdnia-Web-Page/contact' component={Contact}></Route>
                             <Route path='/Centrum-Historii-Zajezdnia-Web-Page/login' component={Login}></Route>
                             <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel' component={AdminMainPanel}></Route>
-                            <Route path='/Centrum-Historii-Zajezdnia-Web-Page/employeepanel' component={EmployeePanel}></Route>
-                            <Route path='/Centrum-Historii-Zajezdnia-Web-Page/technicianpanel' component={TechnicianPanel}></Route>
-                        </Switch>
-                        
+                            <Route path='/Centrum-Historii-Zajezdnia-Web-Page/employee-panel' component={EmployeePanel}></Route>
+                            <Route path='/Centrum-Historii-Zajezdnia-Web-Page/technician-panel' component={TechnicianPanel}></Route>
+                        </Switch>                      
                 </Router>
           );
     }

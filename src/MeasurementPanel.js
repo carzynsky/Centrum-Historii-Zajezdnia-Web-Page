@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import {Container, Row, Col, Form} from 'react-bootstrap';
+import {Container, Row, Col, Form, Button} from 'react-bootstrap';
 import {Line, Bar} from 'react-chartjs-2';
 import './Measurement.css';
+import jsPDF from 'jspdf';
 
 class MeasurementPanel extends Component {
     constructor(props){
@@ -30,14 +31,14 @@ class MeasurementPanel extends Component {
             legend: {
               labels: {
                 fontColor: 'rgb(255,255,255,0.6)',
-                fontSize: 15
+                fontSize: 12
               }
             },
             scales: {
               yAxes: [{
                 display: true,
                 gridLines: {
-                  color: 'rgb(0,0,0,0.1)'
+                  color: 'transparent'
                 },
                 ticks: {
                   fontColor: 'rgb(255,255,255,0.6)',
@@ -48,7 +49,7 @@ class MeasurementPanel extends Component {
               }],
               xAxes: [{
                 gridLines: {
-                  color: 'rgb(0,0,0,0.1)'
+                  color: 'transparent'
                 },
                 ticks: {
                   fontColor: 'rgb(255,255,255,0.78)'
@@ -64,14 +65,14 @@ class MeasurementPanel extends Component {
             legend: {
               labels: {
                 fontColor: 'rgb(255,255,255,0.6)',
-                fontSize: 15
+                fontSize: 12
               }
             },
             scales: {
               yAxes: [{
                 display: true,
                 gridLines: {
-                  color: 'rgb(0,0,0,0.1)'
+                  color: 'transparent'
                 },
                 ticks: {
                   fontColor: 'rgb(255,255,255,0.6)',
@@ -82,7 +83,7 @@ class MeasurementPanel extends Component {
               }],
               xAxes: [{
                 gridLines: {
-                  color: 'rgb(0,0,0,0.1)'
+                  color: 'transparent'
                 },
                 ticks: {
                   fontColor: 'rgb(255,255,255,0.78)'
@@ -111,6 +112,46 @@ class MeasurementPanel extends Component {
     this.fetchingLoopFunction();
   }
 
+  async generatePDF(){
+    var doc = new jsPDF('p', 'pt');
+    var now = new Date();
+    doc.setFont('courier');
+    doc.setFontType('normal');
+    
+    let day = now.getDate();
+    let month = now.getMonth();
+    let year = now.getFullYear();
+
+    const responseTemperature = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageTemperatureLastYears');
+    const responseHumidity = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageHumidityLastYears');
+    const responseInfo = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/report');
+
+    const dataTemperature = await responseTemperature.json();
+    const dataHumidity = await responseHumidity.json();
+    const dataInfo = await responseInfo.json();
+
+    doc.setFontSize(16);
+    doc.text(40,60, 'Raport roczny z dnia ' + day +'.' + month + '.' + year);
+    doc.setFontSize(12);
+    doc.text(40,100, 'Czujnik: ' + this.state.currentSensorName);
+    doc.text(40,120, 'Liczba pomiarow: ' + this.state.numberOfAllMeasurement);
+    doc.text(40,160, 'Srednia temperatura w ' + year +' roku: ' + dataTemperature[dataTemperature.length-1] + '°C');
+    doc.text(40,180, 'Srednia temperatura w poprzednim roku: ' + dataTemperature[dataTemperature.length-2] + '°C');
+    doc.text(40,200, 'Roznica miedzy ostatnim rokiem: +/- ' + (dataTemperature[dataTemperature.length-1] - dataTemperature[dataTemperature.length-2]) + '°C');
+    doc.text(40,220, 'Maksymalna temperatura w ' + year + 'roku: ' + dataInfo[0] + '°C');
+    doc.text(40,240, 'Minimalna temperatura w ' + year + ' roku: ' + dataInfo[1] + '°C');
+    doc.text(40,260, 'Amplituda temperatury w ' + year +' roku: ' + dataInfo[2] + '°C');
+
+    doc.text(40,300, 'Srednia wilgotnosc w ' + year +' roku: ' +  dataHumidity[dataHumidity.length-1] + '%');
+    doc.text(40,320, 'Srednia wilgotnosc w poprzednim roku: ' + dataHumidity[dataHumidity.length-2] + '%');
+    doc.text(40,340, 'Roznica miedzy ostatnim rokiem: +/- ' + (dataHumidity[dataHumidity.length-1] - dataHumidity[dataHumidity.length-2]) + '%');
+    doc.text(40,360, 'Maksymalna wilgotnosc w ' + year + ' roku: ' + dataInfo[3] + '%');
+    doc.text(40,380, 'Minimalna wilgotnosc w ' + year + ' roku: ' + dataInfo[4] + '%');
+    doc.text(40,400, 'Amplituda wilgotnosci w ' + year + 'roku: ' + dataInfo[5] + '%');
+
+    doc.save('raport-' + this.state.currentSensorName + '-' +  year +'.pdf');
+
+  }
   setChartData(dataTemperature, dataHumidity, newLabels, title){
     this.setState({chartTemperatureData: {
       labels: newLabels,
@@ -270,12 +311,18 @@ class MeasurementPanel extends Component {
   render() {
     return (
       <Container className="myContainer">
+        <Row>
+            <Button className="btnEdit" variant="dark" style={{marginLeft: '30px', width: '160px', height: '35px'}} onClick={this.generatePDF.bind(this)}>Generuj roczny raport</Button>
+         </Row>
         <Row className='firstRow'>
           <Col xs='3'>
             <div className='currentTemperature'>
               <Form>
                 <Form.Group>
-                  <Form.Label className='labelHeader'>Aktualna temperatura:</Form.Label>
+                  <Form.Label>           
+                    <img
+                      src={require("./images/temperature.png")} />
+                  </Form.Label>
                   <Form.Text className="labelBody">{this.state.currentTemperature}°C</Form.Text>
                 </Form.Group>
               </Form>
@@ -285,13 +332,17 @@ class MeasurementPanel extends Component {
             <div className='currentHumidity'>
               <Form>
                 <Form.Group>
-                  <Form.Label className='labelHeader'>Aktualna wilgotność:</Form.Label>
+                <Form.Label>           
+                    <img
+                      src={require("./images/humidity.png")} />
+                  </Form.Label>
                   <Form.Text className="labelBody">{this.state.currentHumidity}%</Form.Text>
                 </Form.Group>
               </Form>
             </div>
           </Col >
           <Col xs='2'>
+              
           </Col>
           <Col xs='4'>
             <Row>
@@ -348,7 +399,7 @@ class MeasurementPanel extends Component {
         </Row>
         <Row>
           <Col >
-            <div className='measurementPanel'>
+            <div className='measurementPanelTemperature'>
               <Line 
               data={this.state.chartTemperatureData}
               options={this.state.optionsTemperatureChart}
@@ -357,10 +408,8 @@ class MeasurementPanel extends Component {
               />
             </div>
           </Col>
-        </Row>
-        <Row>
           <Col >
-            <div className='measurementPanel'>
+            <div className='measurementPanelHumidity'>
               <Bar 
               data={this.state.chartHumidityData}
               options={this.state.optionsHumidityChart}
@@ -370,38 +419,47 @@ class MeasurementPanel extends Component {
             </div>
           </Col>
         </Row>
-        <Row>
-        <Col xs='4'>
-            <div className='quantityAll'>
+        <div className='quantityAll'>
+        <Row>           
+            <Col>
               <Form>
                 <Form.Group>
-                  <Form.Label className='labelHeader'>Wszystkie pomiary:</Form.Label>
-                  <Form.Text className="labelBody">{this.state.numberOfAllMeasurement}</Form.Text>
+                  <Form.Label>
+                    <img src={require("./images/quantity.png")} />
+                  </Form.Label>
                 </Form.Group>
-              </Form>
-            </div>
-          </Col>
-          <Col xs='4'>
-            <div className='quantityAll'>
+              </Form>          
+            </Col>
+            <Col>
               <Form>
                 <Form.Group>
-                  <Form.Label className='labelHeader'>Pomiary w tym miesiącu:</Form.Label>
-                  <Form.Text className="labelBody">{this.state.numberOfMeasurementThisMonth}</Form.Text>
+                  <Form.Label>
+                    <label style={{paddingTop: '20px'}}>Wszystkie: {this.state.numberOfAllMeasurement}</label>
+                  </Form.Label>
                 </Form.Group>
-              </Form>
-            </div>
-          </Col>
-          <Col xs='4'>
-            <div className='quantityAll'>
+              </Form>         
+            </Col>
+            <Col>
               <Form>
-                <Form.Group>
-                  <Form.Label className='labelHeader'>Pomiary dzisiaj:</Form.Label>
-                  <Form.Text className="labelBody">{this.state.numberOfMeasurementToday}</Form.Text>
-                </Form.Group>
-              </Form>
-            </div>
-          </Col>
-        </Row>
+                  <Form.Group>
+                    <Form.Label>
+                      <label style={{paddingTop: '20px'}}>Miesiąc: {this.state.numberOfMeasurementThisMonth}</label>
+                    </Form.Label>
+                  </Form.Group>
+                </Form> 
+            </Col>
+            <Col>
+              <Form>
+                  <Form.Group>
+                    <Form.Label>
+                      <label style={{paddingTop: '20px'}}>Dzisiaj: {this.state.numberOfMeasurementToday}</label>
+                    </Form.Label>
+                  </Form.Group>
+                </Form> 
+            </Col>
+      </Row>
+        </div>
+
       </Container>
     );
   }

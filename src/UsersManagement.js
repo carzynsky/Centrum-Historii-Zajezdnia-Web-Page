@@ -279,14 +279,12 @@ class UsersManagement extends Component {
           <Button className="btnDelete" variant="dark" style={{width: '130px'}} onClick={this.deleteLoginHistory}>Wyczyść historie</Button>
         </Row>
         <Row>
-          <Table striped  bordered hover variant='dark' style={{marginTop: '20px'}}>
+          <Table striped bordered hover variant='dark' style={{marginTop: '20px'}}>
             <thead>
               <th>Id logowania</th>
               <th>Godzina</th>
               <th>Id użytkownika</th>
               <th>Login użytkownika</th>
-              <th>Podany login</th>
-              <th>Podane hasło</th>
               <th>Status operacji</th>
             </thead>
             <tbody>
@@ -297,8 +295,6 @@ class UsersManagement extends Component {
                   <td>{l.dateTime}</td>
                   <td>{l.userId}</td>
                   <td>{l.users.login}</td>
-                  <td>{l.userLogin}</td>
-                  <td>{l.userPassword}</td>
                   <td>{l.success}</td>
                 </tr>
                 )

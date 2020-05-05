@@ -257,6 +257,7 @@ class Sensors extends Component {
               <th>Id</th>
               <th>Nazwa</th>
               <th>Adres IP</th>
+              <th>Zewnętrzny adres IP</th>
               <th>Operacje</th>
             </thead>
             <tbody>
@@ -266,6 +267,7 @@ class Sensors extends Component {
                   <td>{s.id}</td>
                   <td>{s.sensorName}</td>
                   <td>{s.ipAddress}</td>
+                  <td>{s.externalIp}</td>
                   <td>
                     <Button className="btnEdit" variant="dark" onClick={this.editSensorData.bind(this, s.id, s.sensorName, s.ipAddress, s.top, s.left, s.externalIp)}>Edytuj</Button>
                     <Button className="btnDelete" variant="dark" onClick={this.deleteSensors.bind(this, s.id)} >Usuń</Button>
