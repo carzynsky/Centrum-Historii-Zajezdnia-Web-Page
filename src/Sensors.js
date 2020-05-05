@@ -244,10 +244,15 @@ class Sensors extends Component {
       const {sensors} = this.state;
     return (
       <Container className="myContainer">
-          <Row>
-              <h3>Lista czujników</h3>
-          </Row>
-
+        <Row>
+                <img className="mapPicture"
+                src={require("./images/map.png")} />
+                {sensors.map((s) => {
+                    return(
+                      <div className="sensorBall" id={s.id} key={s.id} onMouseDown={this.mouseDownSensor} onMouseUp={this.remove} style={{position: 'absolute', top: s.top, left: s.left}}>{s.id}</div>
+                    )
+                })}
+        </Row>
         <Row>
             <Button className="btnEdit" variant="dark" onClick={this.handleCreateShow}>Dodaj</Button>
         </Row>
@@ -278,15 +283,7 @@ class Sensors extends Component {
             </tbody>
           </Table>
         </Row>
-        <Row>
-                <img className="mapPicture"
-                src={require("./images/map.png")} />
-                {sensors.map((s) => {
-                    return(
-                      <div className="sensorBall" id={s.id} key={s.id} onMouseDown={this.mouseDownSensor} onMouseUp={this.remove} style={{position: 'absolute', top: s.top, left: s.left}}>{s.id}</div>
-                    )
-                })}
-        </Row>
+
 
         <Modal show={this.state.showModal} onHide={this.state.handleClose} className="myModal">
         <Modal.Header>

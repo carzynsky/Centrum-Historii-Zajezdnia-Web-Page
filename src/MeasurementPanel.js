@@ -119,7 +119,7 @@ class MeasurementPanel extends Component {
     doc.setFontType('normal');
     
     let day = now.getDate();
-    let month = now.getMonth();
+    let month = now.getMonth()+1;
     let year = now.getFullYear();
 
     const responseTemperature = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageTemperatureLastYears');
