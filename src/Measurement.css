@@ -47,6 +47,7 @@ option
 {
     max-width: 600px;
     margin-top: 80px;
+    margin-bottom: 40px;
     background-color: transparent;
     border-radius: 2px;
     color: rgb(173, 21, 255);
