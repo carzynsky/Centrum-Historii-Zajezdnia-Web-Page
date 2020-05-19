@@ -94,11 +94,19 @@ class MeasurementPanel extends Component {
         }
         this.currentSensor = this.currentSensor.bind(this);
         this.setTimePeriod = this.setTimePeriod.bind(this);
+        this.sendMail = this.sendMail.bind(this);
       }
 
   currentSensor(event){
+    console.log(this.state.sensors);
     this.state.currentSensor = event.target.value;
-    this.state.currentSensorName = this.state.sensors[event.target.value-1].display;
+    let index =0;
+    for(var i=0; i<this.state.sensors.length; i++){
+      if(this.state.sensors[i].value == event.target.value){
+        index = i;
+      }
+    }
+    this.state.currentSensorName = this.state.sensors[index].display;
     // this.setState({
     //   currentSensor: event.target.value,
     //   currentSensorName: this.state.sensors[event.target.value-1].display
@@ -264,11 +272,13 @@ class MeasurementPanel extends Component {
           this.setState({
             currentTemperatureStatus: 'Uwaga! Zbyt wysoka temperatura!'
           })
+          this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId)
         }
         else if(this.state.currentTemperature < 18){
           this.setState({
             currentTemperatureStatus: 'Uwaga! Zbyt niska temperatura!'
           })
+          this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId)
         }
         else{
           this.setState({
@@ -280,11 +290,14 @@ class MeasurementPanel extends Component {
           this.setState({
             currentHumidityStatus: 'Uwaga! Zbyt wysoka wilgotność powietrza!'
           })
+          this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId)
         }
         else if(this.state.currentHumidity < 40){
           this.setState({
             currentHumidityStatus: 'Uwaga! Zbyt niska wilgotność powietrza!'
           })
+          this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId)
+
         }
         else{
           this.setState({
@@ -299,7 +312,30 @@ class MeasurementPanel extends Component {
         console.log(error);
       }
   }
-  
+
+  async sendMail(dt, sid){
+    try{
+      fetch('https://localhost:5001/api/measurement/alert', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          temperature: this.state.currentTemperature,
+          humidity: this.state.currentHumidity,
+          dateTimte: dt,
+          sensorId: sid
+        })
+      })
+      .then(response => {
+        console.log(response);
+      })
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
   componentDidMount(){
       this.fetchingLoopFunction();
       setInterval( () => {
