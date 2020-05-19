@@ -324,7 +324,7 @@ class MeasurementPanel extends Component {
         body: JSON.stringify({
           temperature: this.state.currentTemperature,
           humidity: this.state.currentHumidity,
-          dateTimte: dt,
+          dateTime: dt,
           sensorId: sid
         })
       })
