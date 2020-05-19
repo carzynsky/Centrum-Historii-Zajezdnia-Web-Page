@@ -26,9 +26,8 @@ class AdminPanel extends Component {
           </Row>
         </Container>
         <Switch>
-          <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel' exact component={MeasurementPanel}></Route>
+          <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel' exact component={Server}></Route>
           <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/users-management' component={UsersManagement}></Route>
-          <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/server' component={Server}></Route>
           <Route path='/Centrum-Historii-Zajezdnia-Web-Page/admin-panel/sensors' component={Sensors}></Route>
         </Switch>
                         
