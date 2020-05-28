@@ -27,7 +27,7 @@ class UsersManagement extends Component {
       createUserData: {
         login: '',
         password: '',
-        userFunctionId: ''
+        userFunctionId: 1
       }
     }
     this.editUserData = this.editUserData.bind(this);
@@ -180,7 +180,7 @@ class UsersManagement extends Component {
   async createUser(){
     console.log(this.state.createUserData);
     try{
-      fetch('https://localhost:5001/api/users', {
+      fetch('https://localhost:5001/api/users/', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -192,9 +192,24 @@ class UsersManagement extends Component {
           userFunctionId: this.state.createUserData.userFunctionId
         })
       })
-      .then(response => {
+      .then(response => response.json())
+      .then((result) =>{
+        if(result.message === undefined){
+          alert('Niepoprawne dane!');
+        }
+        else{
+          alert(result.message);
+          this.setState({
+            createUserData:{
+              login: '',
+              password: '',
+              userFunctionId: 1
+            }
+          })
         this.getUsers();
         this.handleCreateClose();
+        }
+        
       })
     }
     catch(error){

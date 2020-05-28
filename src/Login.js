@@ -45,14 +45,13 @@ class Login extends Component {
     })
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
       if(result.status === 'Error'){
         this.setState({
           Message: 'Nie udało się zalogować!'
         })
       }
       else if(result.status === 'Success'){
-        console.log(result.function)
+        localStorage.setItem('loggedUser', this.state.UserLogin);
         this.setState({redirect: result.function});
       }
       else

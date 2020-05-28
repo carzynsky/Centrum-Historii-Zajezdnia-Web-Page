@@ -54,7 +54,8 @@ class GenerateCode extends Component {
           ipAddress: this.state.generatedCodeData.ipAddress,
           externalIp: this.state.generatedCodeData.externalIp,
           top: this.state.generatedCodeData.top,
-          left: this.state.generatedCodeData.left
+          left: this.state.generatedCodeData.left,
+          addedBy: localStorage.getItem('loggedUser')
         })
       })
       .then(response => {

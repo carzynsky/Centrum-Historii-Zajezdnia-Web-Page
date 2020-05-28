@@ -17,7 +17,7 @@ class Sensors extends Component {
               sensorIpAddress: '',
               externalIpAddress: '',
               top: '',
-              left: ''
+              left: '',
             },
             createSensorData: {
               sensorName: '',
@@ -60,7 +60,7 @@ class Sensors extends Component {
           sensorIpAddress: ip,
           top: top,
           left: left,
-          externalIpAddress: external
+          externalIpAddress: external,
         }
 
       });
@@ -144,7 +144,8 @@ class Sensors extends Component {
           ipAddress: this.state.editSensorData.sensorIpAddress,
           externalIp: this.state.editSensorData.externalIpAddress,
           top: this.state.editSensorData.top,
-          left: this.state.editSensorData.left
+          left: this.state.editSensorData.left,
+
         })
       })
       .then(response => {
@@ -167,7 +168,8 @@ class Sensors extends Component {
             ipAddress: this.state.createSensorData.sensorIpAddress,
             externalIp: this.state.createSensorData.externalIpAddress,
             top: this.state.createSensorData.top,
-            left: this.state.createSensorData.left
+            left: this.state.createSensorData.left,
+            addedBy: localStorage.getItem('loggedUser')
           })
         })
         .then(response => {
@@ -206,6 +208,7 @@ class Sensors extends Component {
 
     componentDidMount(){
         this.getSensors();
+        console.log(localStorage.getItem('loggedUser'));
     }
 
   mouseDownSensor(e){
@@ -263,6 +266,7 @@ class Sensors extends Component {
               <th>Nazwa</th>
               <th>Adres IP</th>
               <th>Zewnętrzny adres IP</th>
+              <th>Dodany przez</th>
               <th>Operacje</th>
             </thead>
             <tbody>
@@ -273,8 +277,9 @@ class Sensors extends Component {
                   <td>{s.sensorName}</td>
                   <td>{s.ipAddress}</td>
                   <td>{s.externalIp}</td>
+                  <td>{s.addedBy}</td>
                   <td>
-                    <Button className="btnEdit" variant="dark" onClick={this.editSensorData.bind(this, s.id, s.sensorName, s.ipAddress, s.top, s.left, s.externalIp)}>Edytuj</Button>
+                    <Button className="btnEdit" variant="dark" onClick={this.editSensorData.bind(this, s.id, s.sensorName, s.ipAddress, s.top, s.left, s.externalIp, s.addedBy)}>Edytuj</Button>
                     <Button className="btnDelete" variant="dark" onClick={this.deleteSensors.bind(this, s.id)} >Usuń</Button>
                   </td>
                 </tr>
