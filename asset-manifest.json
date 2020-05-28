@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Centrum-Historii-Zajezdnia-Web-Page/static/css/main.39f42478.chunk.css",
-    "main.js": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/main.750ae5cd.chunk.js",
-    "main.js.map": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/main.750ae5cd.chunk.js.map",
+    "main.js": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/main.afe0dbbf.chunk.js",
+    "main.js.map": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/main.afe0dbbf.chunk.js.map",
     "runtime-main.js": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/runtime-main.280efde1.js",
     "runtime-main.js.map": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/runtime-main.280efde1.js.map",
     "static/css/2.de424728.chunk.css": "/Centrum-Historii-Zajezdnia-Web-Page/static/css/2.de424728.chunk.css",
     "static/js/2.334fe4dd.chunk.js": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/2.334fe4dd.chunk.js",
     "static/js/2.334fe4dd.chunk.js.map": "/Centrum-Historii-Zajezdnia-Web-Page/static/js/2.334fe4dd.chunk.js.map",
     "index.html": "/Centrum-Historii-Zajezdnia-Web-Page/index.html",
-    "precache-manifest.cbb3deb1ee71db129026eb34e94909e9.js": "/Centrum-Historii-Zajezdnia-Web-Page/precache-manifest.cbb3deb1ee71db129026eb34e94909e9.js",
+    "precache-manifest.78bc8fa1386fc9c5a4b40be6142a419a.js": "/Centrum-Historii-Zajezdnia-Web-Page/precache-manifest.78bc8fa1386fc9c5a4b40be6142a419a.js",
     "service-worker.js": "/Centrum-Historii-Zajezdnia-Web-Page/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/Centrum-Historii-Zajezdnia-Web-Page/static/css/2.de424728.chunk.css.map",
     "static/css/main.39f42478.chunk.css.map": "/Centrum-Historii-Zajezdnia-Web-Page/static/css/main.39f42478.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.de424728.chunk.css",
     "static/js/2.334fe4dd.chunk.js",
     "static/css/main.39f42478.chunk.css",
-    "static/js/main.750ae5cd.chunk.js"
+    "static/js/main.afe0dbbf.chunk.js"
   ]
 }
