@@ -20,7 +20,11 @@ class GenerateCode extends Component {
         sensorName: '',
         top: '',
         left: '',
-        externalIp: ''
+        externalIp: '',
+        minTemperature: '',
+        maxTemperature: '',
+        minHumidity: '',
+        maxHumidity: ''
       },
       fileName: 'main.py',
       template: 'xd'
@@ -38,6 +42,10 @@ class GenerateCode extends Component {
     this.createSensor = this.createSensor.bind(this);
     this.clearData = this.clearData.bind(this);
     this.Password = this.Password.bind(this);
+    this.SensorMinTemperatureNew = this.SensorMinTemperatureNew.bind(this);
+    this.SensorMaxTemperatureNew = this.SensorMaxTemperatureNew.bind(this);
+    this.SensorMinHumidityNew = this.SensorMinHumidityNew.bind(this);
+    this.SensorMaxHumidityNew = this.SensorMaxHumidityNew.bind(this);
   }
 
   async createSensor(){
@@ -55,7 +63,11 @@ class GenerateCode extends Component {
           externalIp: this.state.generatedCodeData.externalIp,
           top: this.state.generatedCodeData.top,
           left: this.state.generatedCodeData.left,
-          addedBy: localStorage.getItem('loggedUser')
+          addedBy: localStorage.getItem('loggedUser'),
+          minTemperature: this.state.generatedCodeData.minTemperature,
+          maxTemperature: this.state.generatedCodeData.maxTemperature,
+          minHumidity: this.state.generatedCodeData.minHumidity,
+          maxHumidity: this.state.generatedCodeData.maxHumidity
         })
       })
       .then(response => {
@@ -148,6 +160,22 @@ class GenerateCode extends Component {
     this.state.generatedCodeData.password = event.target.value;
   }
 
+  SensorMinTemperatureNew(event){
+    this.state.generatedCodeData.minTemperature = event.target.value;
+  }
+
+  SensorMaxTemperatureNew(event){
+    this.state.generatedCodeData.maxTemperature = event.target.value;
+  }
+
+  SensorMinHumidityNew(event){
+    this.state.generatedCodeData.minHumidity = event.target.value;
+  }
+
+  SensorMaxHumidityNew(event){
+    this.state.generatedCodeData.maxHumidity = event.target.value;
+  }
+
   render() {
     return (
       <Container className="myContainer">
@@ -198,6 +226,22 @@ class GenerateCode extends Component {
                   <Form.Control type="text" onChange={this.Left}/>
                 </Form.Group>
                 <Form.Group>
+                  <Form.Label>Min temperatura</Form.Label>
+                  <Form.Control type="text" onChange={this.SensorMinTemperatureNew}/>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Max temperatura</Form.Label>
+                  <Form.Control type="text" onChange={this.SensorMaxTemperatureNew}/>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Min wilgotność</Form.Label>
+                  <Form.Control type="text" onChange={this.SensorMinHumidityNew}/>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Max wilgotność</Form.Label>
+                  <Form.Control type="text" onChange={this.SensorMaxHumidityNew}/>
+                </Form.Group>
+                <Form.Group>              
                   <Form.Label>Adres ip zewnętrzny</Form.Label>
                   <Form.Control type="text" onChange={this.ExternalIp}/>
                 </Form.Group>

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Container, Row, Col, Button} from 'react-bootstrap';
 import './Measurement.css';
-import MeasurementPanel from "./MeasurementPanel";
 import UsersManagement from './UsersManagement';
 import Server from './Server';
 import NavAdmin from './NavAdmin';
 import Sensors from './Sensors';
+import userIcon from './images/userIcon.png';
+import './AdminMainPanel.css';
 
 class AdminPanel extends Component {
   render() {
@@ -18,6 +19,19 @@ class AdminPanel extends Component {
               <Col>
                   <h1>Panel administratora</h1>
               </Col>
+          </Row>
+          <Row style={{marginTop: '10px'}}>
+              <Col xs={1}>
+                  <img src={userIcon} className='userIcon' alt="userIcon"/>
+              </Col>
+              <Col xs={1}>
+                  {localStorage.getItem('loggedUser')}
+              </Col>
+          </Row>
+          <Row>
+            <Col>
+            <a href='/Centrum-Historii-Zajezdnia-Web-Page/login'><Button  className="Login-Button2" variant='primary'>Wyloguj</Button></a>
+            </Col>
           </Row>
           <Row>
             <Col>

@@ -179,7 +179,6 @@ h1
 
 .Login-Button2
 {
-    margin-bottom: 30px;
     border: none;
     padding-top: 2px;
     background-image: linear-gradient(to right,  rgb(65, 67, 69) 51%, #232526 100%);
@@ -188,9 +187,19 @@ h1
     height: 35px;
     border-radius: 45px;
     font-size: 13px;
-    text-align: center;
+    text-align: center;    
 }
-
+a
+{
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+a:hover
+{
+    color: white;
+    text-decoration: none;
+}
 .Login-Button2:hover
 {
     transform: translateY(-5px);

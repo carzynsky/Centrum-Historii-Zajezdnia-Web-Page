@@ -18,13 +18,21 @@ class Sensors extends Component {
               externalIpAddress: '',
               top: '',
               left: '',
+              minTemperature: '',
+              maxTemperature: '',
+              minHumidity: '',
+              maxHumidity: ''
             },
             createSensorData: {
               sensorName: '',
               sensorIpAddress: '',
               externalIpAddress: '',
               top: '',
-              left: ''
+              left: '',
+              minTemperature: '',
+              maxTemperature: '',
+              minHumidity: '',
+              maxHumidity: ''
             },
             newX: 0,
             newY: 0,
@@ -37,6 +45,10 @@ class Sensors extends Component {
         this.createSensor = this.createSensor.bind(this);
         this.editSensorData = this.editSensorData.bind(this);
         this.SensorNameNew = this.SensorNameNew.bind(this);
+        this.SensorMinTemperatureNew = this.SensorMinTemperatureNew.bind(this);
+        this.SensorMaxTemperatureNew = this.SensorMaxTemperatureNew.bind(this);
+        this.SensorMinHumidityNew = this.SensorMinHumidityNew.bind(this);
+        this.SensorMaxHumidityNew = this.SensorMaxHumidityNew.bind(this);
         this.SensorIpAddressNew = this.SensorIpAddressNew.bind(this);
         this.SensorNameEdit = this.SensorNameEdit.bind(this);
         this.SensorIpAddressEdit = this.SensorIpAddressEdit.bind(this);
@@ -51,7 +63,7 @@ class Sensors extends Component {
         this.SensorExternalIpAddressNew = this.SensorExternalIpAddressNew.bind(this);
     }
 
-    editSensorData(id, name, ip, top, left, external)
+    editSensorData(id, name, ip, top, left, external, addedBy, minT, maxT, minH, maxH)
     {
       this.setState({
         editSensorData: {
@@ -61,6 +73,10 @@ class Sensors extends Component {
           top: top,
           left: left,
           externalIpAddress: external,
+          minTemperature: minT,
+          maxTemperature: maxT,
+          minHumidity: minH,
+          maxHumidity: maxH
         }
 
       });
@@ -86,6 +102,22 @@ class Sensors extends Component {
 
     SensorNameNew(event){
       this.state.createSensorData.sensorName = event.target.value;
+    }
+
+    SensorMinTemperatureNew(event){
+      this.state.createSensorData.minTemperature = event.target.value;
+    }
+
+    SensorMaxTemperatureNew(event){
+      this.state.createSensorData.maxTemperature = event.target.value;
+    }
+
+    SensorMinHumidityNew(event){
+      this.state.createSensorData.minHumidity = event.target.value;
+    }
+
+    SensorMaxHumidityNew(event){
+      this.state.createSensorData.maxHumidity = event.target.value;
     }
 
     SensorIpAddressNew(event){
@@ -145,6 +177,10 @@ class Sensors extends Component {
           externalIp: this.state.editSensorData.externalIpAddress,
           top: this.state.editSensorData.top,
           left: this.state.editSensorData.left,
+          minTemperature: this.state.editSensorData.minTemperature,
+          maxTemperature: this.state.editSensorData.maxTemperature,
+          minHumidity:  this.state.editSensorData.minHumidity,
+          maxHumidity: this.state.editSensorData.maxHumidity
 
         })
       })
@@ -169,7 +205,11 @@ class Sensors extends Component {
             externalIp: this.state.createSensorData.externalIpAddress,
             top: this.state.createSensorData.top,
             left: this.state.createSensorData.left,
-            addedBy: localStorage.getItem('loggedUser')
+            addedBy: localStorage.getItem('loggedUser'),
+            minTemperature: this.state.createSensorData.minTemperature,
+            maxTemperature: this.state.createSensorData.maxTemperature,
+            minHumidity:  this.state.createSensorData.minHumidity,
+            maxHumidity: this.state.createSensorData.maxHumidity
           })
         })
         .then(response => {
@@ -237,7 +277,7 @@ class Sensors extends Component {
     this.state.newY = parseInt(this.state.newY, 10);
     this.state.sensors.map((s) => {
       if(s.id == el.id){
-        this.editSensorData(s.id, s.sensorName, s.ipAddress, this.state.newY, this.state.newX, s.externalIp);
+        this.editSensorData(s.id, s.sensorName, s.ipAddress, this.state.newY, this.state.newX, s.externalIp, s.addedBy, s.minTemperature, s.maxTemperature, s.minHumidity, s.maxHumidity);
       }
     })
     console.log(this.state.editSensorData);
@@ -267,6 +307,10 @@ class Sensors extends Component {
               <th>Adres IP</th>
               <th>Zewnętrzny adres IP</th>
               <th>Dodany przez</th>
+              <th>Min temperatura</th>
+              <th>Max temperatura</th>
+              <th>Min wilgotność</th>
+              <th>Max wilgotność</th>
               <th>Operacje</th>
             </thead>
             <tbody>
@@ -278,9 +322,13 @@ class Sensors extends Component {
                   <td>{s.ipAddress}</td>
                   <td>{s.externalIp}</td>
                   <td>{s.addedBy}</td>
+                  <td>{s.minTemperature}</td>
+                  <td>{s.maxTemperature}</td>
+                  <td>{s.minHumidity}</td>
+                  <td>{s.maxHumidity}</td>
                   <td>
-                    <Button className="btnEdit" variant="dark" onClick={this.editSensorData.bind(this, s.id, s.sensorName, s.ipAddress, s.top, s.left, s.externalIp, s.addedBy)}>Edytuj</Button>
-                    <Button className="btnDelete" variant="dark" onClick={this.deleteSensors.bind(this, s.id)} >Usuń</Button>
+                    <Button className="btnEdit" variant="dark" onClick={this.editSensorData.bind(this, s.id, s.sensorName, s.ipAddress, s.top, s.left, s.externalIp, s.addedBy, s.minTemperature, s.maxTemperature, s.minHumidity, s.maxHumidity)}>Edytuj</Button>
+                    <Button className="btnDeleteS" variant="dark" onClick={this.deleteSensors.bind(this, s.id)} >Usuń</Button>
                   </td>
                 </tr>
                 )
@@ -320,6 +368,22 @@ class Sensors extends Component {
               <Form.Label>Left</Form.Label>
               <Form.Control type="text" defaultValue={this.state.editSensorData.left} onChange={this.SensorLeftEdit}/>
             </Form.Group>
+            <Form.Group>
+              <Form.Label>Min temperatura</Form.Label>
+              <Form.Control type="text" disabled defaultValue={this.state.editSensorData.minTemperature}/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Max temperatura</Form.Label>
+              <Form.Control type="text" disabled defaultValue={this.state.editSensorData.maxTemperature}/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Min wilgotność</Form.Label>
+              <Form.Control type="text" disabled defaultValue={this.state.editSensorData.minHumidity}/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Max wilgotność</Form.Label>
+              <Form.Control type="text" disabled defaultValue={this.state.editSensorData.maxHumidity}/>
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -358,6 +422,22 @@ class Sensors extends Component {
               <Form.Label>Left</Form.Label>
               <Form.Control type="text" onChange={this.SensorLeftNew}/>
             </Form.Group>
+            <Form.Group>
+              <Form.Label>Min temperatura</Form.Label>
+              <Form.Control type="text" onChange={this.SensorMinTemperatureNew}/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Max temperatura</Form.Label>
+              <Form.Control type="text" onChange={this.SensorMaxTemperatureNew}/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Min wilgotność</Form.Label>
+              <Form.Control type="text" onChange={this.SensorMinHumidityNew}/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Max wilgotność</Form.Label>
+              <Form.Control type="text" onChange={this.SensorMaxHumidityNew}/>
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -369,7 +449,6 @@ class Sensors extends Component {
           </Button>
         </Modal.Footer>
       </Modal>
-
       </Container>
     );
   }

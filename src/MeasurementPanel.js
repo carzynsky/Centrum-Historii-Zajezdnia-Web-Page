@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Container, Row, Col, Form, Button} from 'react-bootstrap';
+import {Container, Row, Col, Form, Button, Modal} from 'react-bootstrap';
 import {Line, Bar} from 'react-chartjs-2';
 import './Measurement.css';
 import jsPDF from 'jspdf';
@@ -10,9 +10,12 @@ class MeasurementPanel extends Component {
         this.state = {
           timePeriods: [{value: 0, display: 'Ostatnie 7 dni', request: 'LastWeek'}, {value: 1, display:'Aktualny rok', request: 'ByMonth'}, {value: 2, display: 'Ostatnie 5 lat', request: 'LastYears'}],
           selectedPeriod: '1',
+          fetchInterval: '',
+          firstFetched: false,
           selectedPeriodName: 'ByMonth',
           currentSensorName: '',
           currentSensor: '1',
+          allSensors: '',
           currentTemperature: '',
           currentHumidity: '',
           currentTemperatureStatus: '',
@@ -20,7 +23,20 @@ class MeasurementPanel extends Component {
           numberOfAllMeasurement: '',
           numberOfMeasurementToday: '',
           numberOfMeasurementThisMonth: '',
+          showModal: false,
           sensors: [],
+          editSensorData: {
+            id: '',
+            sensorName: '',
+            sensorIpAddress: '',
+            externalIpAddress: '',
+            top: '',
+            left: '',
+            minTemperature: '',
+            maxTemperature: '',
+            minHumidity: '',
+            maxHumidity: ''
+          },
           chartTemperatureData: {data: {datasets: [], labels: []}},
           chartHumidityData: {data: {datasets: [], labels: []}},
           optionsHumidityChart: {
@@ -95,18 +111,39 @@ class MeasurementPanel extends Component {
         this.currentSensor = this.currentSensor.bind(this);
         this.setTimePeriod = this.setTimePeriod.bind(this);
         this.sendMail = this.sendMail.bind(this);
+        this.editSensor = this.editSensor.bind(this);
+        this.SensorMinTempEdit = this.SensorMinTempEdit.bind(this);
+        this.SensorMaxTempEdit = this.SensorMaxTempEdit.bind(this);
+        this.SensorMinHumiEdit = this.SensorMinHumiEdit.bind(this);
+        this.SensorMaxHumiEdit = this.SensorMaxHumiEdit.bind(this);
       }
 
   currentSensor(event){
     console.log(this.state.sensors);
     this.state.currentSensor = event.target.value;
-    let index =0;
+    var index = 0;
     for(var i=0; i<this.state.sensors.length; i++){
       if(this.state.sensors[i].value == event.target.value){
         index = i;
       }
     }
+    
     this.state.currentSensorName = this.state.sensors[index].display;
+    console.log(this.state.sensors);
+    this.setState({
+      editSensorData: {
+          id: this.state.currentSensor,
+          sensorName: this.state.currentSensorName,
+          sensorIpAddress: this.state.allSensors[index].ipAddress,
+          top: this.state.allSensors[index].top,
+          left: this.state.allSensors[index].left,
+          externalIpAddress: this.state.allSensors[index].externalIp,
+          minTemperature: this.state.allSensors[index].minTemperature,
+          maxTemperature:this.state.allSensors[index]. maxTemperature,
+          minHumidity: this.state.allSensors[index].minHumidity,
+          maxHumidity: this.state.allSensors[index].maxHumidity
+      }});
+
     // this.setState({
     //   currentSensor: event.target.value,
     //   currentSensorName: this.state.sensors[event.target.value-1].display
@@ -208,6 +245,63 @@ class MeasurementPanel extends Component {
   })
 
   }
+
+  SensorMinTempEdit(event){
+    this.state.editSensorData.minTemperature = event.target.value;
+  }
+
+  SensorMaxTempEdit(event){
+    this.state.editSensorData.maxTemperature = event.target.value;
+  }
+
+  SensorMinHumiEdit(event){
+    this.state.editSensorData.minHumidity = event.target.value;
+  }
+
+  SensorMaxHumiEdit(event){
+    this.state.editSensorData.maxHumidity = event.target.value;
+  }
+
+  async editSensor(){  
+    console.log(this.state.editSensorData) ;
+    fetch('https://localhost:5001/api/sensors/'+this.state.editSensorData.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        id: this.state.editSensorData.id,
+        sensorName: this.state.editSensorData.sensorName,
+        ipAddress: this.state.editSensorData.sensorIpAddress,
+        externalIp: this.state.editSensorData.externalIpAddress,
+        top: this.state.editSensorData.top,
+        left: this.state.editSensorData.left,
+        minTemperature: this.state.editSensorData.minTemperature,
+        maxTemperature: this.state.editSensorData.maxTemperature,
+        minHumidity:  this.state.editSensorData.minHumidity,
+        maxHumidity: this.state.editSensorData.maxHumidity
+      })
+    })
+    .then(response => {
+      this.handleClose();
+      this.fetchingLoopFunction();
+    })
+  }
+
+  handleShow = () => {
+    console.log(this.state.editSensorData);
+    this.setState({
+      showModal: true
+    });
+  }
+
+  handleClose = () => {
+    this.setState({
+      showModal: false
+    });
+  }
+
   async fetchingLoopFunction(){
       try{
         const responseTemperature = await fetch('https://localhost:5001/api/measurement/'+ this.state.currentSensor + '/averageTemperature' + this.state.selectedPeriodName);
@@ -226,6 +320,7 @@ class MeasurementPanel extends Component {
         const dataNumberOfMeasurementThisMonth = await responseNumberOfMeasurementThisMonth.json();
         const dataNumberOfMeasurementToday = await responseNumberOfMeasurementToday.json();
 
+        console.log(dataSensors);
         this.setState({
           currentTemperature: dataCurrent[dataCurrent.length-1].temperature,
           currentHumidity: dataCurrent[dataCurrent.length-1].humidity,
@@ -235,9 +330,28 @@ class MeasurementPanel extends Component {
           sensors: dataSensors.map((s) => {
             return {value: s.id, display: s.sensorName}
           }),
+          allSensors: dataSensors,
           currentSensorName: dataSensors[0].sensorName
         });
 
+        if(!this.state.firstFetched){
+          this.setState({
+            editSensorData: {
+                id: this.state.currentSensor,
+                sensorName: this.state.currentSensorName,
+                sensorIpAddress: this.state.allSensors[0].ipAddress,
+                top: this.state.allSensors[0].top,
+                left: this.state.allSensors[0].left,
+                externalIpAddress: this.state.allSensors[0].externalIp,
+                minTemperature: this.state.allSensors[0].minTemperature,
+                maxTemperature:this.state.allSensors[0]. maxTemperature,
+                minHumidity: this.state.allSensors[0].minHumidity,
+                maxHumidity: this.state.allSensors[0].maxHumidity
+            },
+                firstFetched: true});
+        }
+       
+          
         var tmpDate = new Date();
         var newLabels = [];
         var title = '';
@@ -267,18 +381,31 @@ class MeasurementPanel extends Component {
             break;
           }
         }
-
-        if(this.state.currentTemperature > 24){
+        let sensorIndxTmp = 0;
+        for(var i=0; i<this.state.sensors.length; i++){
+          if(this.state.allSensors[i].id == this.state.currentSensor){
+            sensorIndxTmp = i;
+          }
+        }
+        let sent = false;
+        if(this.state.currentTemperature > this.state.allSensors[sensorIndxTmp].maxTemperature){
           this.setState({
             currentTemperatureStatus: 'Uwaga! Zbyt wysoka temperatura!'
           })
-          this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId)
+          if(!sent){
+            this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId);
+            sent = true;
+          }
+            
         }
-        else if(this.state.currentTemperature < 18){
+        else if(this.state.currentTemperature < this.state.allSensors[sensorIndxTmp].minTemperature){
           this.setState({
             currentTemperatureStatus: 'Uwaga! Zbyt niska temperatura!'
           })
-          this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId)
+          if(!sent){
+            this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId);
+            sent = true;
+          }
         }
         else{
           this.setState({
@@ -286,17 +413,23 @@ class MeasurementPanel extends Component {
           })
         }
 
-        if(this.state.currentHumidity > 60){
+        if(this.state.currentHumidity > this.state.allSensors[sensorIndxTmp].maxHumidity){
           this.setState({
             currentHumidityStatus: 'Uwaga! Zbyt wysoka wilgotność powietrza!'
           })
-          this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId)
+          if(!sent){
+            this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId);
+            sent = true;
+          }
         }
-        else if(this.state.currentHumidity < 40){
+        else if(this.state.currentHumidity < this.state.allSensors[sensorIndxTmp].minHumidity){
           this.setState({
             currentHumidityStatus: 'Uwaga! Zbyt niska wilgotność powietrza!'
           })
-          this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId)
+          if(!sent){
+            this.sendMail(dataCurrent[dataCurrent.length-1].dateTime, dataCurrent[dataCurrent.length-1].sensorId);
+            sent = true;
+          }
 
         }
         else{
@@ -338,17 +471,21 @@ class MeasurementPanel extends Component {
   }
   componentDidMount(){
       this.fetchingLoopFunction();
-      setInterval( () => {
+
+      this.state.fetchInterval = setInterval( () => {
         this.fetchingLoopFunction()
       }, 30000);
-    
+  }
+  componentWillUnmount(){
+    clearInterval(this.state.fetchInterval);
   }
 
   render() {
     return (
       <Container className="myContainer">
         <Row>
-            <Button className="btnEdit" variant="dark" style={{marginLeft: '30px', width: '160px', height: '35px'}} onClick={this.generatePDF.bind(this)}>Generuj roczny raport</Button>
+            <Button className="Login-Button2" variant="dark" style={{position: 'absolute', marginTop: '-169px', marginLeft: '150px', width: '160px', height: '35px'}} onClick={this.generatePDF.bind(this)}>Generuj roczny raport</Button>
+            <Button className="Login-Button2" variant="dark" style={{position: 'absolute', marginTop: '-169px', marginLeft: '330px', width: '200px', height: '35px'}} onClick={this.handleShow}>Ustaw parametry alarmów</Button>
          </Row>
         <Row className='firstRow'>
           <Col xs='3'>
@@ -495,7 +632,39 @@ class MeasurementPanel extends Component {
             </Col>
       </Row>
         </div>
-
+        <Modal show={this.state.showModal} onHide={this.state.handleClose} className="myModal">
+        <Modal.Header>
+          <Modal.Title>Edycja parametrów alarmów</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Minimalna temperatura</Form.Label>
+              <Form.Control type="text" defaultValue={this.state.editSensorData.minTemperature} onChange={this.SensorMinTempEdit}/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Maksymalna temperatura</Form.Label>
+              <Form.Control type="text" defaultValue={this.state.editSensorData.maxTemperature} onChange={this.SensorMaxTempEdit}/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Minimalna wilgotność</Form.Label>
+              <Form.Control type="text" defaultValue={this.state.editSensorData.minHumidity} onChange={this.SensorMinHumiEdit}/>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Maksymalna wilgotność</Form.Label>
+              <Form.Control type="text" defaultValue={this.state.editSensorData.maxHumidity} onChange={this.SensorMaxHumiEdit}/>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.handleClose}>
+            Zamknij
+          </Button>
+          <Button variant="primary" onClick={this.editSensor}>
+            Zatwierdź
+          </Button>
+        </Modal.Footer>
+      </Modal>
       </Container>
     );
   }

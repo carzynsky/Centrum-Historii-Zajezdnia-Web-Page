@@ -1,29 +1,51 @@
 import React, { Component } from "react";
 import {Container, Row, Col, Button} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './Measurement.css';
 import MeasurementPanel from './MeasurementPanel';
+import userIcon from './images/userIcon.png';
+import './EmployeePanel';
+import Server from './Server';
+import NavEmployee from './NavEmployee';
 
 class EmployeePanel extends Component {
   render() {
     return (
-      <div>
-        <Container className="myContainer">
-        <Row>
+      <Router>
+          <div>
+          <Container className="myContainer">
+          <Row>
+              <Col>
+                  <h1>Panel pracownika</h1>
+              </Col>
+          </Row>
+          <Row style={{marginTop: '10px'}}>
+                <Col xs={1}>
+                    <img src={userIcon} className='userIcon' alt="userIcon"/>
+                </Col>
+                <Col xs={1}>
+                    {localStorage.getItem('loggedUser')}
+                </Col>
+            </Row>
+          <Row>
             <Col>
-                <h1>Panel pracownika</h1>
+            <Col>
+              <a href='/Centrum-Historii-Zajezdnia-Web-Page/login'><Button  className="Login-Button2" variant='primary'>Wyloguj</Button></a>
             </Col>
-        </Row>
-        <Row>
-          <Col>
-              <Link to='/Centrum-Historii-Zajezdnia-Web-Page/login'>
-                  <Button  className="Login-Button2" variant='primary'>Wyloguj</Button>
-              </Link>
-          </Col>
-        </Row>
-      </Container>
-      <MeasurementPanel/>
-      </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <NavEmployee />
+            </Col>
+          </Row>
+        </Container>
+        <Switch>
+            <Route path='/Centrum-Historii-Zajezdnia-Web-Page/employee-panel' exact component={Server}></Route>
+            <Route path='/Centrum-Historii-Zajezdnia-Web-Page/employee-panel/measurement' component={MeasurementPanel}></Route>
+        </Switch>
+        </div>
+      </Router>
     );
   }
 }
