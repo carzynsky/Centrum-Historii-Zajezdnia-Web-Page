@@ -29,13 +29,6 @@ class EmployeePanel extends Component {
             </Row>
           <Row>
             <Col>
-            <Col>
-              <a href='/Centrum-Historii-Zajezdnia-Web-Page/login'><Button  className="Login-Button2" variant='primary'>Wyloguj</Button></a>
-            </Col>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
               <NavEmployee />
             </Col>
           </Row>

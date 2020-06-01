@@ -29,13 +29,6 @@ class AdminPanel extends Component {
           </Row>
           <Row>
             <Col>
-              <a href='/Centrum-Historii-Zajezdnia-Web-Page/login'>
-                <Button  className="Login-Button2" variant='primary'>Wyloguj</Button>
-              </a>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
               <NavTechnician />
             </Col >
           </Row>

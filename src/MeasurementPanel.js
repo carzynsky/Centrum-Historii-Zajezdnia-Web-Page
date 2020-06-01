@@ -484,8 +484,8 @@ class MeasurementPanel extends Component {
     return (
       <Container className="myContainer">
         <Row>
-            <Button className="Login-Button2" variant="dark" style={{position: 'absolute', marginTop: '-169px', marginLeft: '150px', width: '160px', height: '35px'}} onClick={this.generatePDF.bind(this)}>Generuj roczny raport</Button>
-            <Button className="Login-Button2" variant="dark" style={{position: 'absolute', marginTop: '-169px', marginLeft: '330px', width: '200px', height: '35px'}} onClick={this.handleShow}>Ustaw parametry alarmów</Button>
+            <Button className="Login-Button2" variant="dark" style={{position: 'absolute',  marginTop: '-50px', marginLeft: '30px', width: '160px', height: '35px'}} onClick={this.generatePDF.bind(this)}>Generuj roczny raport</Button>
+            <Button className="Login-Button2" variant="dark" style={{position: 'absolute',   marginTop: '-50px', marginLeft: '200px', width: '200px', height: '35px'}} onClick={this.handleShow}>Ustaw parametry alarmów</Button>
          </Row>
         <Row className='firstRow'>
           <Col xs='3'>
